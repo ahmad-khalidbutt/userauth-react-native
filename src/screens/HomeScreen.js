@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -6,7 +7,14 @@ import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 
 const HomeScreen = ({ navigation }) => {
-  console.log(navigation.getParam(''));
+  useEffect(async () => {
+    const user = await AsyncStorage.getItem('auth_meta');
+    if (user) {
+      navigation.navigate('Dashboard', {
+        user: JSON.parse(user),
+      });
+    }
+  });
   return (
     <Background>
       <Logo />

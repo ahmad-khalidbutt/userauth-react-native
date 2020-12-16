@@ -23,4 +23,26 @@ const handleLogin = (username, password) => {
     });
 };
 
-export { handleLogin };
+const handleSignup = (firstName, lastName, username, password) => {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let body = JSON.stringify({ firstName, lastName, username, password });
+
+  let requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body,
+  };
+
+  return fetch('http://localhost:4000/users/register', requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return false;
+    });
+};
+
+export { handleLogin, handleSignup };
