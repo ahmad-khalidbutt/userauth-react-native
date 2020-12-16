@@ -4,13 +4,8 @@ import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
-import { Navigation } from '../types';
 
-type Props = {
-  navigation: Navigation;
-};
-
-const Dashboard = ({ navigation }: Props) => (
+const Dashboard = ({ navigation }) => (
   <Background>
     <Logo />
     <Header>Let’s start</Header>

@@ -5,11 +5,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-const Background = ({ children }: Props) => (
+const Background = ({ children }) => (
   <ImageBackground
     source={require('../assets/background_dot.png')}
     resizeMode="repeat"

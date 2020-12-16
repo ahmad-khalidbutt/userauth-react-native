@@ -8,17 +8,13 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { usernameValidator, passwordValidator } from '../core/utils';
-import { Navigation } from '../types';
+import { handleLogin } from '../helper/authentication';
 
-type Props = {
-  navigation: Navigation;
-};
-
-const LoginScreen = ({ navigation }: Props) => {
+const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const _onLoginPressed = () => {
+  const _onLoginPressed = async () => {
     const usernameError = usernameValidator(username.value);
     const passwordError = passwordValidator(password.value);
 
@@ -28,7 +24,13 @@ const LoginScreen = ({ navigation }: Props) => {
       return;
     }
 
-    navigation.navigate('Dashboard');
+    handleLogin(username.value, password.value).then((res) => {
+      if (res) {
+        navigation.navigate('Dashboard', {
+          user: res,
+        });
+      }
+    });
   };
 
   return (
@@ -43,7 +45,7 @@ const LoginScreen = ({ navigation }: Props) => {
         label="Username"
         returnKeyType="next"
         value={username.value}
-        onChangeText={text => setUsername({ value: text, error: '' })}
+        onChangeText={(text) => setUsername({ value: text, error: '' })}
         error={!!username.error}
         errorText={username.error}
         autoCapitalize="none"
@@ -56,7 +58,7 @@ const LoginScreen = ({ navigation }: Props) => {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
+        onChangeText={(text) => setPassword({ value: text, error: '' })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
